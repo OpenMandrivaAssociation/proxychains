@@ -1,32 +1,31 @@
 %define name proxychains
-%define version 1.8.2
-%define release 2mdk
+%define version 3.1
+%define release %mkrel 1
 %define major 1
 %define libname %mklibname %name %major
+%define develname %mklibname %name -d 
 
 Name: 		%{name} 
-Summary: 	This program forces any tcp connection to follow through proxy.
 Version: 	%{version}
 Release: 	%{release}
-Source:  	%{name}-%{version}.tar.bz2	
-Patch0:		proxychains_gccbuild.patch.bz2
+Summary: 	This program forces any tcp connection to follow through proxy.
+License: 	GPL
 Group: 		Networking/Other 
 URL:		http://proxychains.sourceforge.net
-BuildRoot:      %{_tmppath}/%{name}-buildroot  
-Requires: libproxychains1 = 1.8.2-2mdk
+Source:  	http://prdownloads.sourceforge.net/proxychains/%{name}-%{version}.tar.gz
+Requires:   %{libname} = %{version}-%{release}
+BuildRoot:  %{_tmppath}/%{name}-%{version}
 
-License: 	GPL
 
 %package -n %libname
-Summary: This program forces any tcp connection to follow through proxy.
-Group:  System/Libraries
-Provides: libproxychains
+Summary:    This program forces any tcp connection to follow through proxy.
+Group:      System/Libraries
+Provides:	lib%{name} = %{version}-%{release}
 
-%package -n %libname-devel
-Summary: This program forces any tcp connection to follow through proxy.
-Group: Development/Other
-Provides: libproxychains-devel
-Requires: libproxychains1 = 1.8.2-2mdk
+%package -n %develname
+Summary:    This program forces any tcp connection to follow through proxy.
+Group:      Development/Other
+Requires:	%{libname} = %{version}-%{release}
 
 %description
 This program forces any tcp connection made by any given tcp client
@@ -44,31 +43,28 @@ It is FREE.
 This version (1.8.x)  supports SOCKS4, SOCKS5 and HTTP CONNECT proxy servers.
 Auth-types: socks - "user/pass" , http - "basic".
 
-%description -n %libname-devel
+%description -n %develname
 Devel package for proxychains.
 
 %prep
-rm -rf $RPM_BUILD_ROOT
-
+rm -rf %{buildroot}
 %setup -q 
 
-%patch0 -p1
-
-cat ./proxychains/Makefile.in | sed -e "s#\$(mkinstalldirs) /etc/#\$(mkinstalldirs) \$(sysconfdir)/#g" | sed -e "s#\$(INSTALL_DATA) \$(srcdir)/proxychains.conf /etc/proxychains.conf#\$(INSTALL_DATA) \$(srcdir)/proxychains.conf \$(sysconfdir)/proxychains.conf#g" > ./proxychains/Makefile.in.new
-mv ./proxychains/Makefile.in.new ./proxychains/Makefile.in
 %build
-cat ./proxychains/main.c | sed -e "s#/usr/lib/libproxychains.so#/usr/lib/libproxychains.so.1#g" > ./proxychains/main.c.new
-mv ./proxychains/main.c.new ./proxychains/main.c
-%configure --prefix=%buildroot/usr --sysconfdir=%buildroot/etc
+%configure2_5x
 
 %make
 
 %install
 %makeinstall 
+
 %clean
-rm -rf $RPM_BUILD_ROOT  
+rm -rf %{buildroot}  
+
 %post -n %libname -p /sbin/ldconfig
+
 %postun -n %libname -p /sbin/ldconfig
+
 %files 
 %defattr(-,root,root)  
 %doc README AUTHORS COPYING ChangeLog
@@ -76,11 +72,11 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/*
 
 %files -n %libname
-%defattr(-,root,root,-)  
+%defattr(-,root,root)
 %{_libdir}/*.so.*
 
-%files -n %libname-devel
-%defattr(-,root,root,-)  
+%files -n %develname
+%defattr(-,root,root)
 %{_libdir}/*.la
 %{_libdir}/*.so
-
+%{_libdir}/*.a
