@@ -8,7 +8,7 @@
 Name: 		%{name} 
 Version: 	%{version}
 Release: 	%{release}
-Summary: 	This program forces any tcp connection to follow through proxy.
+Summary: 	This program forces any tcp connection to follow through proxy
 License: 	GPL
 Group: 		Networking/Other 
 URL:		http://proxychains.sourceforge.net
@@ -18,12 +18,12 @@ BuildRoot:  %{_tmppath}/%{name}-%{version}
 
 
 %package -n %libname
-Summary:    This program forces any tcp connection to follow through proxy.
+Summary:    This program forces any tcp connection to follow through proxy
 Group:      System/Libraries
 Provides:	lib%{name} = %{version}-%{release}
 
 %package -n %develname
-Summary:    This program forces any tcp connection to follow through proxy.
+Summary:    This program forces any tcp connection to follow through proxy
 Group:      Development/Other
 Requires:	%{libname} = %{version}-%{release}
 
