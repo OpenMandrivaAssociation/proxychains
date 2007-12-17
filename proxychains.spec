@@ -14,7 +14,6 @@ Group: 		Networking/Other
 URL:		http://proxychains.sourceforge.net
 Source:  	http://prdownloads.sourceforge.net/proxychains/%{name}-%{version}.tar.gz
 Requires:   %{libname} = %{version}-%{release}
-BuildRoot:  %{_tmppath}/%{name}-%{version}
 
 
 %package -n %libname
