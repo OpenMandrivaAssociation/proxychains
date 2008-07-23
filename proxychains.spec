@@ -1,6 +1,6 @@
 %define name proxychains
 %define version 3.1
-%define release %mkrel 1
+%define release %mkrel 3
 %define major 1
 %define libname %mklibname %name %major
 %define develname %mklibname %name -d 
