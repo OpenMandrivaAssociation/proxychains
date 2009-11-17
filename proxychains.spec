@@ -1,7 +1,7 @@
 %define name proxychains
 %define version 3.1
-%define release %mkrel 4
-%define major 1
+%define release %mkrel 5
+%define major 3
 %define libname %mklibname %name %major
 %define develname %mklibname %name -d 
 
@@ -13,14 +13,14 @@ License: 	GPL
 Group: 		Networking/Other 
 URL:		http://proxychains.sourceforge.net
 Source:  	http://prdownloads.sourceforge.net/proxychains/%{name}-%{version}.tar.gz
-Requires:   %{libname} = %{version}-%{release}
+Patch0:		proxychains-3.1-ld_preload.patch
 BuildRoot:  %{_tmppath}/%{name}-%{version}
 
 
 %package -n %libname
 Summary:    This program forces any tcp connection to follow through proxy
 Group:      System/Libraries
-Provides:	lib%{name} = %{version}-%{release}
+Obsoletes:	%{_lib}proxychains1 < 3.1-5
 
 %package -n %develname
 Summary:    This program forces any tcp connection to follow through proxy
@@ -47,8 +47,8 @@ Auth-types: socks - "user/pass" , http - "basic".
 Devel package for proxychains.
 
 %prep
-rm -rf %{buildroot}
 %setup -q 
+%patch0 -p1
 
 %build
 %configure2_5x
@@ -56,7 +56,8 @@ rm -rf %{buildroot}
 %make
 
 %install
-%makeinstall 
+rm -rf %{buildroot}
+%makeinstall_std
 
 %clean
 rm -rf %{buildroot}  
@@ -77,7 +78,7 @@ rm -rf %{buildroot}
 
 %files -n %libname
 %defattr(-,root,root)
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}*
 
 %files -n %develname
 %defattr(-,root,root)
