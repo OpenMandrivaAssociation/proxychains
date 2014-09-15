@@ -49,7 +49,8 @@ Devel package for proxychains.
 %patch1 -p1
 
 %build
-%configure2_5x
+%configure2_5x \
+		--disable-static
 
 %make
 
