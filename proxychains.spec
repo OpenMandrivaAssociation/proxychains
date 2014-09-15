@@ -4,7 +4,7 @@
 
 Name:		proxychains
 Version:	3.1
-Release:	7
+Release:	6.1
 Summary:	This program forces any tcp connection to follow through proxy
 License:	GPL
 Group:		Networking/Other 
