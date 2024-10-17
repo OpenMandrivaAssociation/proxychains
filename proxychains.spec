@@ -8,7 +8,7 @@ Release:	8
 Summary:	This program forces any tcp connection to follow through proxy
 License:	GPL
 Group:		Networking/Other 
-URL:		http://proxychains.sourceforge.net
+URL:		https://proxychains.sourceforge.net
 Source0:	http://prdownloads.sourceforge.net/proxychains/%{name}-%{version}.tar.gz
 Patch0:		proxychains-3.1-ld_preload.patch
 Patch1:		glibc215.patch
