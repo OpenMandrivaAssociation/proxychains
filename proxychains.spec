@@ -24,6 +24,11 @@ Summary:	This program forces any tcp connection to follow through proxy
 Group:		Development/Other
 Requires:	%{libname} = %{EVRD}
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 %description
 This program forces any tcp connection made by any given tcp client
 to follow through proxy (or proxy chain). It is a kind of proxifier.
